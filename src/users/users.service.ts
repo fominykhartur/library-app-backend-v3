@@ -2,8 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { UpdateUser } from './dto/update-user.dto';
-import { USER_NOT_FOUND } from '../auth/auth.constants';
 import { AuthDto } from 'src/auth/dto/auth.dto';
+import { USER_NOT_FOUND_BY_ID } from './users.constants';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +14,11 @@ export class UsersService {
   }
 
   async getUserById(id: number) {
-    return await this.userRepository.findByPk(id);
+    const user = await this.userRepository.findByPk(id);
+    if (!user) {
+      throw new HttpException(USER_NOT_FOUND_BY_ID, HttpStatus.NOT_FOUND);
+    }
+    return user;
   }
 
   async updateUserById(id: number, dto: UpdateUser) {
