@@ -3,11 +3,13 @@ import {
   BelongsTo,
   Column,
   DataType,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { Authors } from 'src/authors/authors.model';
 import { Categories } from 'src/categories/categories.model';
+import { UsersBooks } from 'src/users-books/users-books.model';
 
 @Table({ modelName: 'books' })
 export class Books extends Model<Books> {
@@ -17,6 +19,12 @@ export class Books extends Model<Books> {
     unique: true,
     autoIncrement: true,
     primaryKey: true,
+  })
+  @HasMany(() => UsersBooks, {
+    foreignKey: 'bookId',
+    as: 'Book',
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
   id: number;
 

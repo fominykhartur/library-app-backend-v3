@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table, HasMany } from 'sequelize-typescript';
+import { UsersBooks } from 'src/users-books/users-books.model';
 
 @Table({ modelName: 'users' })
 export class User extends Model<User> {
@@ -12,6 +13,12 @@ export class User extends Model<User> {
     unique: true,
     autoIncrement: true,
     primaryKey: true,
+  })
+  @HasMany(() => UsersBooks, {
+    foreignKey: 'userId',
+    as: 'User',
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
   id: number;
 

@@ -5,7 +5,11 @@ import { CreateBook } from './dto/create-book.dto';
 import { UpdateBook } from './dto/update-book.dto';
 import { Categories } from 'src/categories/categories.model';
 import { Authors } from 'src/authors/authors.model';
-import { BOOK_NOT_DELETED, BOOK_NOT_FOUND } from './books.constants';
+import {
+  BOOK_EXISTS,
+  BOOK_NOT_DELETED,
+  BOOK_NOT_FOUND,
+} from './books.constants';
 
 @Injectable()
 export class BooksService {
@@ -30,7 +34,13 @@ export class BooksService {
   }
 
   async createBook(dto: CreateBook): Promise<Books> {
-    return await this.booksRepository.create({ ...dto });
+    const book = await this.booksRepository.findOne({
+      where: { name: dto.name },
+    });
+    if (book) {
+      throw new HttpException(BOOK_EXISTS, HttpStatus.BAD_REQUEST);
+    }
+    return await this.booksRepository.create(dto);
   }
 
   async updateBookById(id: number, dto: UpdateBook): Promise<string> {

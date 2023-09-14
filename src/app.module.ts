@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthorsModule } from './authors/authors.module';
 import { CategoriesModule } from './categories/categories.module';
 import { getSequelizeCOnfig } from './configs/sequelize.config';
+import { UsersBooksModule } from './users-books/users-books.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { getSequelizeCOnfig } from './configs/sequelize.config';
     BooksModule,
     AuthorsModule,
     CategoriesModule,
+    UsersBooksModule,
   ],
   controllers: [],
   providers: [],
