@@ -50,4 +50,11 @@ export class UsersBooks extends Model<UsersBooks> {
     onUpdate: 'CASCADE',
   })
   bookId: number;
+
+  @ApiProperty({
+    description: 'Статус книги - прочитан/не прочитано',
+    example: false,
+  })
+  @Column({ type: DataType.BOOLEAN, defaultValue: false })
+  status: boolean;
 }

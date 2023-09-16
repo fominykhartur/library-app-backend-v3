@@ -32,7 +32,7 @@ export class AuthService {
     return user;
   }
 
-  async login(dto: AuthDto) {
+  async login(dto: AuthDto): Promise<{ token: string }> {
     const user = await this.userService.getUserByEmail(dto.email);
 
     if (!user) {

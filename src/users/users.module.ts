@@ -5,6 +5,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { AuthModule } from 'src/auth/auth.module';
 import { UsersBooks } from 'src/users-books/users-books.model';
+import { UsersBooksModule } from 'src/users-books/users-books.module';
+import { Books } from 'src/books/books.model';
+import { BooksModule } from 'src/books/books.module';
 
 @Module({
   controllers: [UsersController],
@@ -12,6 +15,8 @@ import { UsersBooks } from 'src/users-books/users-books.model';
   imports: [
     SequelizeModule.forFeature([User, UsersBooks]),
     forwardRef(() => AuthModule),
+    UsersBooksModule,
+    BooksModule,
   ],
   exports: [UsersService],
 })

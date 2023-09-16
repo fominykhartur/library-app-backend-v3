@@ -19,7 +19,6 @@ export class BooksService {
     const books = await this.booksRepository.findAll({
       include: [Categories, Authors],
     });
-    console.log(books);
     return books;
   }
 
