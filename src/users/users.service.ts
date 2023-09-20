@@ -4,6 +4,7 @@ import { User } from './users.model';
 import { UpdateUser } from './dto/update-user.dto';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 import { USER_EMAIL_IS_BUSY, USER_NOT_FOUND_BY_ID } from './users.constants';
+import { Roles } from 'src/roles/roles.model';
 
 @Injectable()
 export class UsersService {
@@ -12,13 +13,16 @@ export class UsersService {
   async getAllUsers(): Promise<User[]> {
     return await this.userRepository.findAll({
       attributes: { exclude: ['passwordHashed'] },
+      include: [Roles],
     });
   }
 
   async getUserById(id: number): Promise<User> {
     const user = await this.userRepository.findByPk(id, {
       attributes: { exclude: ['passwordHashed'] },
+      include: [Roles],
     });
+
     if (!user) {
       throw new HttpException(USER_NOT_FOUND_BY_ID, HttpStatus.NOT_FOUND);
     }
@@ -36,14 +40,18 @@ export class UsersService {
   }
 
   async getUserByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { email: email } });
+    return await this.userRepository.findOne({
+      where: { email: email },
+      include: [Roles],
+    });
   }
 
-  async createUser(dto: AuthDto): Promise<User> {
+  async createUser(dto: AuthDto, roleId?: number): Promise<User> {
     return await this.userRepository.create({
       email: dto.email,
       passwordHashed: dto.password,
       username: `username-${Math.random().toString().slice(2, 9)}`,
+      roleId: roleId,
     });
   }
 }

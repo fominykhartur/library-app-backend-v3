@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Model, Table, HasMany } from 'sequelize-typescript';
+import {
+  Column,
+  DataType,
+  Model,
+  Table,
+  HasMany,
+  BelongsTo,
+} from 'sequelize-typescript';
+import { Roles } from 'src/roles/roles.model';
 import { UsersBooks } from 'src/users-books/users-books.model';
 
 @Table({ modelName: 'users' })
@@ -43,4 +51,17 @@ export class User extends Model<User> {
     type: DataType.STRING,
   })
   username: string;
+
+  @ApiProperty({ example: '1', description: 'Айди роли пользователя' })
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  @BelongsTo(() => Roles, {
+    foreignKey: 'roleId',
+    as: 'Role',
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  roleId: number;
 }

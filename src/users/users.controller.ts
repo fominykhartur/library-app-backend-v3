@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -23,8 +24,13 @@ import { User } from './users.model';
 import { USER_EMAIL_IS_BUSY, USER_NOT_FOUND_BY_ID } from './users.constants';
 import { UsersBooks } from 'src/users-books/users-books.model';
 import { BOOK_NOT_FOUND } from 'src/books/books.constants';
+import { Roles } from 'src/auth/roles-auth.decorator';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('users')
+@UseGuards(JwtAuthGuard)
+@UseGuards(RolesGuard)
 @Controller('users')
 export class UsersController {
   constructor(
@@ -35,6 +41,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Получение списка всех пользователей' })
   @ApiResponse({ status: HttpStatus.OK, type: [User] })
+  @Roles('ADMIN', 'USER')
   @Get('')
   async getUsers(): Promise<User[]> {
     return this.userService.getAllUsers();
@@ -52,6 +59,7 @@ export class UsersController {
   }
 
   // @UseGuards(JwtAuthGuard)
+
   @ApiOperation({ summary: 'Обновление данных пользователя по его id' })
   @ApiResponse({ status: HttpStatus.OK, type: [User] })
   @ApiResponse({

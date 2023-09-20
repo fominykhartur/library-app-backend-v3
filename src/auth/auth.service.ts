@@ -9,25 +9,32 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { hash, compare } from 'bcryptjs';
 import { User } from 'src/users/users.model';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
+    private rolesService: RolesService,
   ) {}
 
-  async register(dto: AuthDto): Promise<User> {
+  async register(dto: AuthDto, roleName = 'USER'): Promise<User> {
     const candidate = await this.userService.getUserByEmail(dto.email);
     if (candidate) {
       throw new HttpException(USER_EXISTS, HttpStatus.BAD_REQUEST);
     }
 
+    const role = await this.rolesService.getRoleByName(roleName);
+    console.log(role.id);
     const passwordHashed = await hash(dto.password, 5);
-    const user = await this.userService.createUser({
-      ...dto,
-      password: passwordHashed,
-    });
+    const user = await this.userService.createUser(
+      {
+        ...dto,
+        password: passwordHashed,
+      },
+      role.id,
+    );
 
     return user;
   }
@@ -45,14 +52,15 @@ export class AuthService {
       throw new HttpException(USER_WRONG_PASSWORD, HttpStatus.BAD_REQUEST);
     }
 
-    return this.generateJWT(user);
+    return this.generateJWT(user, user['Role'].name);
   }
 
-  async generateJWT(user: User) {
+  async generateJWT(user: User, roleName: string) {
     const payload = {
       id: user.id,
       email: user.email,
       username: user.username,
+      role: roleName,
     };
     return {
       token: await this.jwtService.signAsync(payload, { expiresIn: '24h' }),

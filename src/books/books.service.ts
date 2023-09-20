@@ -26,6 +26,7 @@ export class BooksService {
     const book = await this.booksRepository.findByPk(id, {
       include: [Categories, Authors],
     });
+
     if (!book) {
       throw new HttpException(BOOK_NOT_FOUND, HttpStatus.NOT_FOUND);
     }

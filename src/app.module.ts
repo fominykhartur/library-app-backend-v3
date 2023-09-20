@@ -8,6 +8,7 @@ import { AuthorsModule } from './authors/authors.module';
 import { CategoriesModule } from './categories/categories.module';
 import { getSequelizeCOnfig } from './configs/sequelize.config';
 import { UsersBooksModule } from './users-books/users-books.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsersBooksModule } from './users-books/users-books.module';
     AuthorsModule,
     CategoriesModule,
     UsersBooksModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],

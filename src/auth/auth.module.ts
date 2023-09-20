@@ -5,6 +5,7 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJWTConfig } from 'src/configs/jwt.config';
+import { RolesModule } from 'src/roles/roles.module';
 
 @Module({
   controllers: [AuthController],
@@ -16,6 +17,7 @@ import { getJWTConfig } from 'src/configs/jwt.config';
       inject: [ConfigService],
       useFactory: getJWTConfig,
     }),
+    RolesModule,
   ],
   exports: [AuthService, JwtModule],
 })
