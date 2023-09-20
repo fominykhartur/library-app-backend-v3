@@ -6,7 +6,11 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -27,10 +31,12 @@ import { BOOK_NOT_FOUND } from 'src/books/books.constants';
 import { Roles } from 'src/auth/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
-@UseGuards(JwtAuthGuard)
-@UseGuards(RolesGuard)
+// @UseGuards(JwtAuthGuard)
+// @UseGuards(RolesGuard)
+@UsePipes(new ValidationPipe())
 @Controller('users')
 export class UsersController {
   constructor(

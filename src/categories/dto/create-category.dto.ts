@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class createCategory {
   @ApiProperty({ description: 'Название категории', example: 'Фантастика' })
-  name!: string;
+  @IsString({ message: 'Название категории должно быть строкой' })
+  name: string;
 }

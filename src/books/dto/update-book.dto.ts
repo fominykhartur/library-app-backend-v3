@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateBook {
   @ApiProperty({
@@ -6,6 +7,8 @@ export class UpdateBook {
     description: 'Название книги',
     required: false,
   })
+  @IsOptional()
+  @IsString({ message: 'Название должно быть строкой' })
   name?: string;
 
   @ApiProperty({
@@ -13,12 +16,16 @@ export class UpdateBook {
     description: 'Уникальный идентификатор автора',
     required: false,
   })
-  author?: string;
+  @IsOptional({})
+  @IsNumber({}, { message: 'ID автора должен быть числом' })
+  authorId?: number;
 
   @ApiProperty({
     example: '1',
     description: 'Уникальный идентификатор категории',
     required: false,
   })
-  category?: string;
+  @IsOptional()
+  @IsNumber({}, { message: 'ID категории должен быть числом' })
+  categoryId?: number;
 }

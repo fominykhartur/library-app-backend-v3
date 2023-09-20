@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthorsService } from './authors.service';
 import { Authors } from './authors.model';
@@ -6,6 +14,7 @@ import { CreateAuthor } from './dto/create-author.dto';
 import { AUTHOR_EXISTS } from './authors.constants';
 
 @ApiTags('authors')
+@UsePipes(new ValidationPipe())
 @Controller('authors')
 export class AuthorsController {
   constructor(private authorsService: AuthorsService) {}

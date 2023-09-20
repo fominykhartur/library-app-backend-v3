@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { CreateRole } from './dto/create-role.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -6,6 +15,7 @@ import { Roles } from './roles.model';
 
 @ApiTags('roles')
 @Controller('roles')
+@UsePipes(new ValidationPipe())
 export class RolesController {
   constructor(private rolesService: RolesService) {}
 

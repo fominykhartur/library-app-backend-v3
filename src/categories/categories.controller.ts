@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Categories } from './categories.model';
@@ -6,6 +14,7 @@ import { createCategory } from './dto/create-category.dto';
 import { CATEGORY_EXISTS } from './categories.constants';
 
 @ApiTags('categories')
+@UsePipes(new ValidationPipe())
 @Controller('categories')
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}

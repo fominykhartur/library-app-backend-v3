@@ -7,6 +7,8 @@ import {
   Post,
   Delete,
   HttpStatus,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BooksService } from './books.service';
@@ -20,6 +22,7 @@ import {
 } from './books.constants';
 
 @ApiTags('books')
+@UsePipes(new ValidationPipe())
 @Controller('books')
 export class BooksController {
   constructor(private booksService: BooksService) {}

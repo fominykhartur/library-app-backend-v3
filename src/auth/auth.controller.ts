@@ -5,6 +5,8 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthDto } from './dto/auth.dto';
@@ -17,6 +19,7 @@ import {
 } from './auth.constants';
 
 @ApiTags('auth')
+@UsePipes(new ValidationPipe())
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

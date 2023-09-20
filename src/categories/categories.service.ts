@@ -15,9 +15,10 @@ export class CategoriesService {
   }
 
   async createCategory(dto: createCategory) {
-    const category = this.categoriesRepository.findOne({
+    const category = await this.categoriesRepository.findOne({
       where: { name: dto.name },
     });
+    console.log(category);
     if (category) {
       throw new HttpException(CATEGORY_EXISTS, HttpStatus.BAD_REQUEST);
     }
