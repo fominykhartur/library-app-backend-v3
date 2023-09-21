@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UploadedFile,
@@ -36,7 +38,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 @ApiTags('users')
 // @UseGuards(JwtAuthGuard)
 // @UseGuards(RolesGuard)
-@UsePipes(new ValidationPipe())
+@UsePipes(new ValidationPipe({ transform: true }))
 @Controller('users')
 export class UsersController {
   constructor(
@@ -115,6 +117,7 @@ export class UsersController {
   })
   @Patch(':id/books/:bookId')
   async changeBookStatus(@Param() params: ChangeStatus): Promise<string> {
+    console.log(typeof params.id);
     return await this.usersBooksService.changeBookStatus(
       params.id,
       params.bookId,

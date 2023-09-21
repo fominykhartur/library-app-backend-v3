@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import {
   USER_EXISTS,
   USER_NOT_FOUND,
   USER_WRONG_PASSWORD,
-} from 'src/auth/auth.constants';
+} from '../auth/auth.constants';
 import { JwtService } from '@nestjs/jwt';
 import { hash, compare } from 'bcryptjs';
-import { User } from 'src/users/users.model';
-import { RolesService } from 'src/roles/roles.service';
+import { User } from '../users/users.model';
+import { RolesService } from '../roles/roles.service';
 
 @Injectable()
 export class AuthService {
