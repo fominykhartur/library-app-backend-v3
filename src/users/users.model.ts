@@ -7,8 +7,8 @@ import {
   HasMany,
   BelongsTo,
 } from 'sequelize-typescript';
-import { Roles } from 'src/roles/roles.model';
-import { UsersBooks } from 'src/users-books/users-books.model';
+import { Roles } from '../roles/roles.model';
+import { UsersBooks } from '../users-books/users-books.model';
 
 @Table({ modelName: 'users' })
 export class User extends Model<User> {

@@ -3,10 +3,10 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users.model';
-import { AuthModule } from 'src/auth/auth.module';
-import { UsersBooks } from 'src/users-books/users-books.model';
-import { UsersBooksModule } from 'src/users-books/users-books.module';
-import { BooksModule } from 'src/books/books.module';
+import { AuthModule } from '../auth/auth.module';
+import { UsersBooks } from '../users-books/users-books.model';
+import { UsersBooksModule } from '../users-books/users-books.module';
+import { BooksModule } from '../books/books.module';
 
 @Module({
   controllers: [UsersController],

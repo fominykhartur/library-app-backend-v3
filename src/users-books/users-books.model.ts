@@ -6,8 +6,8 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { Books } from 'src/books/books.model';
-import { User } from 'src/users/users.model';
+import { Books } from '../books/books.model';
+import { User } from '../users/users.model';
 
 @Table({ modelName: 'usersBooks' })
 export class UsersBooks extends Model<UsersBooks> {

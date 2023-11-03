@@ -2,9 +2,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { UpdateUser } from './dto/update-user.dto';
-import { AuthDto } from 'src/auth/dto/auth.dto';
-import { USER_EMAIL_IS_BUSY, USER_NOT_FOUND_BY_ID } from './users.constants';
-import { Roles } from 'src/roles/roles.model';
+import { AuthDto } from '../auth/dto/auth.dto';
+import {
+  USER_EMAIL_IS_BUSY,
+  USER_NOT_DETELED,
+  USER_NOT_FOUND_BY_ID,
+} from './users.constants';
+import { Roles } from '../roles/roles.model';
 
 @Injectable()
 export class UsersService {
@@ -37,6 +41,14 @@ export class UsersService {
       });
 
     return 'Данные пользователя успешно обновлены';
+  }
+
+  async deleteUserById(id: number) {
+    const count = await this.userRepository.destroy({ where: { id: id } });
+    if (count === 0) {
+      throw new HttpException(USER_NOT_DETELED, HttpStatus.BAD_REQUEST);
+    }
+    return 'Пользователь успешно удален';
   }
 
   async getUserByEmail(email: string): Promise<User> {

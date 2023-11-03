@@ -3,8 +3,8 @@ import { Books } from './books.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateBook } from './dto/create-book.dto';
 import { UpdateBook } from './dto/update-book.dto';
-import { Categories } from 'src/categories/categories.model';
-import { Authors } from 'src/authors/authors.model';
+import { Categories } from '../categories/categories.model';
+import { Authors } from '../authors/authors.model';
 import {
   BOOK_EXISTS,
   BOOK_NOT_DELETED,

@@ -19,14 +19,22 @@ export class AuthService {
     private rolesService: RolesService,
   ) {}
 
-  async register(dto: AuthDto, roleName = 'USER'): Promise<User> {
+  async register(
+    dto: AuthDto,
+    secret = null,
+    roleName = 'USER',
+  ): Promise<User> {
+    if (secret === process.env.JWT_SECRET) {
+      roleName = 'ADMIN';
+    }
+
     const candidate = await this.userService.getUserByEmail(dto.email);
     if (candidate) {
       throw new HttpException(USER_EXISTS, HttpStatus.BAD_REQUEST);
     }
 
     const role = await this.rolesService.getRoleByName(roleName);
-    console.log(role.id);
+
     const passwordHashed = await hash(dto.password, 5);
     const user = await this.userService.createUser(
       {

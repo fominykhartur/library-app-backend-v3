@@ -7,9 +7,9 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { Authors } from 'src/authors/authors.model';
-import { Categories } from 'src/categories/categories.model';
-import { UsersBooks } from 'src/users-books/users-books.model';
+import { Authors } from '../authors/authors.model';
+import { Categories } from '../categories/categories.model';
+import { UsersBooks } from '../users-books/users-books.model';
 
 @Table({ modelName: 'books' })
 export class Books extends Model<Books> {

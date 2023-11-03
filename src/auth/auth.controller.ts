@@ -4,14 +4,16 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
-import { User } from 'src/users/users.model';
+import { User } from '../users/users.model';
 import {
   USER_EXISTS,
   USER_NOT_FOUND,
@@ -28,8 +30,11 @@ export class AuthController {
   @ApiResponse({ status: HttpStatus.CREATED, type: User })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: USER_EXISTS })
   @Post('register')
-  async register(@Body() dto: AuthDto): Promise<User> {
-    return this.authService.register(dto);
+  async register(
+    @Query('secret') secret: string,
+    @Body() dto: AuthDto,
+  ): Promise<User> {
+    return this.authService.register(dto, secret);
   }
 
   @ApiOperation({ summary: 'Авторизация пользователя' })

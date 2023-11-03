@@ -1,11 +1,11 @@
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
-import { Authors } from 'src/authors/authors.model';
-import { Books } from 'src/books/books.model';
-import { Categories } from 'src/categories/categories.model';
-import { Roles } from 'src/roles/roles.model';
-import { UsersBooks } from 'src/users-books/users-books.model';
-import { User } from 'src/users/users.model';
+import { Authors } from '../authors/authors.model';
+import { Books } from '../books/books.model';
+import { Categories } from '../categories/categories.model';
+import { Roles } from '../roles/roles.model';
+import { UsersBooks } from '../users-books/users-books.model';
+import { User } from '../users/users.model';
 
 export const getSequelizeCOnfig = async (
   configService: ConfigService,

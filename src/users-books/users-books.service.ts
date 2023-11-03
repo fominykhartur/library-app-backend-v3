@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UsersBooks } from './users-books.model';
 import { AddBookToUser } from './dto/add-book-to-user.dto';
-import { Books } from 'src/books/books.model';
+import { Books } from '../books/books.model';
 import {
   USERBOOK_STATUS_CHANGED,
   USERBOOK_STATUS_DIDNT_CHANGED,
